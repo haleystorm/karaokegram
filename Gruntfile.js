@@ -17,6 +17,13 @@ module.exports = function (grunt) {
         file: 'bin/www'
       }
     },
+    stylus: {
+      dist: {
+        files: {
+          'public/css/style.css': 'public/css/style.styl'
+        }
+      }
+    },
     watch: {
       options: {
         nospawn: true,
@@ -38,8 +45,9 @@ module.exports = function (grunt) {
       },
       css: {
         files: [
-          'public/css/*.css'
+          'public/css/*.styl'
         ],
+        tasks: ['stylus'],
         options: {
           livereload: reloadPort
         }
@@ -73,6 +81,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
+    'stylus',
     'develop',
     'watch'
   ]);
