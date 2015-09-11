@@ -13,9 +13,9 @@ More to come later.
 
 2. Install [Grunt](http://gruntjs.com/getting-started#installing-the-cli)
 
-4. Clone the reveal.js repository
+4. Clone the karaokegram repository
    ```sh
-   $ git clone https://github.com/hakimel/reveal.js.git
+   $ git clone https://github.com/haleystorm/karaokegram.git
    ```
 
 5. Navigate to the karaokegram folder
