@@ -1,6 +1,171 @@
-body
-  padding 50px
-  font 14px "Lucida Grande", Helvetica, Arial, sans-serif
+/*
+ * Import nib
+ */
+@import 'nib'
 
-a
-  color #00B7FF
+/*
+ * Grab a custom font from Google
+ */
+@import url('http://fonts.googleapis.com/css?family=Quicksand')
+
+/*
+ * Nib provides a CSS reset
+ */
+global-reset()
+
+/*
+ * Store the main color and
+ * background color as variables
+ */
+main-color = #fa5b4d
+background-color = #fff
+
+body
+  font-family 'Georgia'
+  background-color background-color
+  padding-right 5px
+  color #444
+
+header
+  font-family 'Quicksand'
+  padding 50px 10px
+  color #fff
+  font-size 30px
+  text-align center
+
+  h2
+    font-size 15px
+
+  /*
+   * Note the use of the `main-color`
+   * variable and the `darken` function
+   */
+  background-color main-color
+  border-bottom 1px solid darken(main-color, 30%)
+  text-shadow 0px -1px 0px darken(main-color, 30%)
+
+.wrapper
+  background white
+  border-radius 10px
+  -webkit-box-shadow 0px 0px 8px rgba(0,0,0,0.3)
+  -moz-box-shadow 0px 0px 8px rgba(0,0,0,0.3)
+  box-shadow 0px 0px 8px rgba(0,0,0,0.3)
+  position relative
+  z-index 90
+
+.ribbon-wrapper-green
+  width: 85px;
+  height: 88px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+
+.ribbon-green
+  font: bold 15px Sans-Serif;
+  color: #333;
+  text-align: center;
+  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -5px;
+  top: 15px;
+  width: 120px;
+  background-color: #BFDC7A;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#BFDC7A), to(#8EBF45)); 
+  background-image: -webkit-linear-gradient(top, #BFDC7A, #8EBF45); 
+  background-image:    -moz-linear-gradient(top, #BFDC7A, #8EBF45); 
+  background-image:     -ms-linear-gradient(top, #BFDC7A, #8EBF45); 
+  background-image:      -o-linear-gradient(top, #BFDC7A, #8EBF45); 
+  color: #6a6340;
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+
+.ribbon-green:before, .ribbon-green:after {
+  content: "";
+  border-top:   3px solid #6e8900;   
+  border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  position:absolute;
+  bottom: -3px;
+}
+
+.ribbon-green:before {
+  left: 0;
+}
+.ribbon-green:after {
+  right: 0;
+}​
+.container
+  width 420px
+  margin 50px auto
+  overflow hidden
+
+.main-content
+  float left
+  width 420px
+
+  p
+    margin-bottom 20px
+
+  .search-bar
+    width 400px
+
+  .center
+    width 420px
+    text-align center
+
+  .submit-button
+    padding-top 50px
+
+  .button
+    font 25px 'Quicksand'
+    text-decoration none
+    background-color main-color
+    color #fff
+    padding 2px 6px 2px 6px
+
+.sidebar
+  float left
+  width 200px
+
+  .widget
+
+    /*
+     * Note the lack of vendor
+     * prefixes here. Nib will
+     * add them for us
+     */
+    border-radius 3px
+    border 1px solid #ccc
+    margin-left 20px
+    background-color background-color
+    box-shadow inset 0px 0px 0px 3px rgba(#fff, 0.8), 0px 3px 0px -2px rgba(#000, 0.1)
+
+    h1
+      font-family 'Quicksand'
+      margin 13px 10px 4px
+      padding-bottom 10px
+      border-bottom 1px dotted #ddd
+      border-radius 2px 2px 0px 0px
+      margin-bottom 10px
+
+    p
+      font-size 13px
+      padding 0px 10px
+      margin-bottom 10px
+
+p
+  line-height 1.8
+
+footer
+  width 420px
+  margin 50px auto
+  border-top 1px dotted #ccc
+  padding-top 5px
+  font-size 13px

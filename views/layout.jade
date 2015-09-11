@@ -10,4 +10,16 @@ html(lang='en')
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
   body
-    block content
+    header
+      h1 Karaokegram
+      h2 Send a performance to a long distance friend
+    .wrapper
+      .ribbon-wrapper-green
+        .ribbon-green BETA
+    .container
+      .main-content
+        block content
+      .sidebar
+        block sidebar
+    footer
+      p Running on node with Express, Jade and Stylus
