@@ -30,12 +30,10 @@ More to come later.
 
 7. Serve the presentation and monitor source files for changes
    ```sh
-   $ grunt serve
+   $ grunt
    ```
 
-8. Open <http://localhost:3000> to view your presentation
-
-   You can change the port by using `grunt serve --port 8001`.
+8. Open <http://localhost:3000>.
 
 
 
