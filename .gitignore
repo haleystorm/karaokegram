@@ -30,3 +30,6 @@ public/components
 
 # Mac stupidness
 .DS_Store
+
+# Config file
+default.json

@@ -1,0 +1,12 @@
+Just a random stream of things I learned while building this... I'm new to node. Quickly getting less new.
+
+routes
+
+Oh... so that is where the http services are implemented.
+
+YouTube Search
+
+Many request search for publicly available content and therefore don't require authentication. When you
+submit an unauthenticated request, you need to include a unique API key for your application.
+
+Create and use a server key if your application runs on a server. Do not use this key outside of your server code. For example, do not embed it in a web page. To prevent quota theft, restrict your key so that requests are only allowed from your servers' source IP addresses.

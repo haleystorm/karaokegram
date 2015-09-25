@@ -1,11 +1,18 @@
-
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+// Get Google api key from config file
+var config = require('config');
+var API_KEY = config.get('YouTube.api_key');
+
+// Google api
+var google = require('googleapis');
+// Google youtube client
+var youtube = google.youtube('v3');
 
 var routes = require('./routes/index');
 var users = require('./routes/user');
@@ -29,6 +36,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Make API_KEY accessable to our router
+// Make google client accessable to our router
+app.use(function(req, res, next) {
+    req.API_KEY = API_KEY;
+    req.youtube = youtube;
+    next();
+});
 
 app.use('/', routes);
 app.use('/users', users);
