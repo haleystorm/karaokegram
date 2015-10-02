@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET search results */
-router.get('/searchList', function(req, res) {
+router.get('/', function(req, res) {
 
     var API_KEY = req.API_KEY;
     var youtube = req.youtube;

@@ -4,18 +4,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-// Get Google api key from config file
+// Needed to read configuration file
 var config = require('config');
-var API_KEY = config.get('YouTube.api_key');
-
 // Google api
 var google = require('googleapis');
+// Multer api - for saving uploaded video
+var multer  = require('multer');
+
+// Get Google api key from config file
+var API_KEY = config.get('YouTube.api_key');
+
 // Google youtube client
 var youtube = google.youtube('v3');
 
+// Get upload directory from config file
+var UPLOAD_DIR = config.get('Files.upload_dir')
+
+// Upload api
+var upload = multer({ dest: UPLOAD_DIR });
+
 var routes = require('./routes/index');
-var users = require('./routes/user');
+var searchYouTube = require('./routes/searchYouTube');
 
 var app = express();
 
@@ -24,7 +33,6 @@ app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
 // view engine setup
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -38,7 +46,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make API_KEY accessable to our router
-// Make google client accessable to our router
+// Make youtube client accessable to our router
 app.use(function(req, res, next) {
     req.API_KEY = API_KEY;
     req.youtube = youtube;
@@ -46,7 +54,15 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/search', searchYouTube);
+app.post('/upload', upload.single('video.webm'), function (req, res, next) {
+    console.log(req.body);
+
+    console.log(req.file.originalname);
+    console.log(req.file.filename);
+
+    res.send({ msg:'Received ' + 1 + ' files' });
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

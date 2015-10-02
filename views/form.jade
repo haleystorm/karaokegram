@@ -1,0 +1,6 @@
+extends layout
+
+block content
+    form(action="/photo/upload", method="post", enctype="multipart/form-data")
+        input(type="file", name="avatar")
+        input(type="submit", value="Upload Image")

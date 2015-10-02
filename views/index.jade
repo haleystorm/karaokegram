@@ -5,14 +5,16 @@ block content
     #searchYouTube
         fieldset
             input#inputSearch(type='text', placeholder='Search...')
-            button#btnDoSearch Search
+            button#btn-do-search Search
     #resultList
         ul
     
     #watchYouTube
     
     p 2. Press Record (time it right!)
-    img#camera-placeholder(width='420', src="images/camera-video.png", alt="camera-video")
+    video(autoplay, width='420px')
+    button#btn-start-recording Record
+    button#btn-stop-recording Stop
     p 3. Share
     #sendVideo
         fieldset
@@ -22,4 +24,4 @@ block content
             input#inputFriendName(type='text', placeholder="Friend's Name")
             input#inputFriendEmail(type='text', placeholder="Friend's Email")
             br
-            button#btnSubmit Send Video
+            button#btn-submit Send Video
