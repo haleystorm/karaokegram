@@ -14,18 +14,37 @@ var google = require('googleapis');
 // Include Multer api module - for saving uploaded video
 var multer  = require('multer');
 
+// Include node mailer module - for sending emails
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+
 
 
 // Get Google api key from config file
 var API_KEY = config.get('YouTube.api_key');
 
 // Get upload directory from config file
-var UPLOAD_DIR = config.get('Files.upload_dir')
+var UPLOAD_DIR = config.get('Files.upload_dir');
+
+// Get gmail address and password from config file
+var gmailaddr = config.get('Gmail.address');
+var gmailpass = config.get('Gmail.password');
 
 // Google youtube client
 var youtube = google.youtube('v3');
 
-
+// Create smtp transporter for sending email
+console.log(gmailaddr);
+console.log(gmailpass);
+var transporter = nodemailer.createTransport(
+    smtpTransport({
+        service: 'gmail',
+        auth: {
+            user: gmailaddr,
+            pass: gmailpass,
+            authMethod: 'PLAIN'
+        }
+    }));
 
 // Configure routes
 var routes = require('./routes/index');
@@ -61,6 +80,8 @@ app.use(function(req, res, next) {
     req.API_KEY = API_KEY;
     req.youtube = youtube;
     req.upload = multer({ dest: UPLOAD_DIR });
+    req.transporter = transporter;
+    req.sender = gmailaddr;
     next();
 });
 
