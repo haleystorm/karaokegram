@@ -4,27 +4,37 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// Needed to read configuration file
+
+// Include configuration module - to read configuration file
 var config = require('config');
-// Google api
+
+// Include Google api module - to access youtube search api
 var google = require('googleapis');
-// Multer api - for saving uploaded video
+
+// Include Multer api module - for saving uploaded video
 var multer  = require('multer');
+
+
 
 // Get Google api key from config file
 var API_KEY = config.get('YouTube.api_key');
 
-// Google youtube client
-var youtube = google.youtube('v3');
-
 // Get upload directory from config file
 var UPLOAD_DIR = config.get('Files.upload_dir')
+
+// Google youtube client
+var youtube = google.youtube('v3');
 
 // Upload api
 var upload = multer({ dest: UPLOAD_DIR });
 
+
+
+// Configure routes
 var routes = require('./routes/index');
 var searchYouTube = require('./routes/searchYouTube');
+
+
 
 var app = express();
 
@@ -45,6 +55,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 // Make API_KEY accessable to our router
 // Make youtube client accessable to our router
 app.use(function(req, res, next) {
@@ -52,6 +64,8 @@ app.use(function(req, res, next) {
     req.youtube = youtube;
     next();
 });
+
+
 
 app.use('/', routes);
 app.use('/search', searchYouTube);
@@ -63,6 +77,8 @@ app.post('/upload', upload.single('video.webm'), function (req, res, next) {
 
     res.send({ msg:'Received ' + 1 + ' files' });
 });
+
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
