@@ -28,6 +28,12 @@
             alert("Sorry, this site is only supported by Firefox.");
         }
 
+        // Scroll page back up to top of page
+        var target = $('header');
+        $('html,body').animate({
+            scrollTop: target.offset().top
+        }, 1000);
+
         // Start streaming from the webcam
         if(navigator.getUserMedia) {
             navigator.getUserMedia({ audio: true, video: true }, onMediaSuccess, onMediaError);
@@ -35,11 +41,18 @@
             alert('getUserMedia() is not supported in your browser');
         }
 
+        // User hit enter in search input
+        $('#inputSearch').keypress(function(e) {
+            if(e.which == 13) {
+                doSearch(e);
+            }
+        });
+
         // Search button click
         $('#btn-do-search').on('click', doSearch);
 
         // Search result video link click. Must be done on static element.
-        $('#resultList ul').on('click', 'li div a.linkshowvideo', showVideo);
+        $('#resultList ul').on('click', 'li div a.linkshowvideo', doShowVideo);
 
         // Start recording click
         $('#btn-start-recording').on('click', doStartRecording);
@@ -85,6 +98,31 @@
         });
     }
 
+    // Show selected YouTube Video
+    function doShowVideo(event) {
+
+        // Scroll to video
+        var target = $('#section-2');
+        $('html,body').animate({
+            scrollTop: target.offset().top
+        }, 1000);
+
+        // Prevent link from firing
+        event.preventDefault();
+
+        // Retrieve video id from the link rel attribute
+        var thisId = $(this).attr('rel');
+
+        // Create url for video with thisId
+        var url = "https://www.youtube.com/embed/" + thisId;
+
+        // Create iframe for video
+        var videoContent = '<iframe class="frameYouTube" scrolling="no" frameborder="no" src="' + url + '" ></iframe>';
+
+        // Inject the video content string into our exiting HTML div
+        $('#watchYouTube').html(videoContent);
+    }
+
     // Start web camera stream, start recording the stream, and disable start button
     function doStartRecording(event) {
         event.preventDefault();
@@ -109,6 +147,12 @@
         // Stop recording from webcam
         mediaRecorder.stop();
         //webcamStream.stop();
+
+        // Scroll page to step 3
+        var target = $('#section-4');
+        $('html,body').animate({
+            scrollTop: target.offset().top
+        }, 1000);
     }
 
     // Send video data and form information to server
@@ -146,15 +190,38 @@
                 contentType: false,
                 processData: false,
             }).done(function( response ) {
-                // Clear the camera
-                var video = document.querySelector('video');
-                video.src = '#';
-                videoBlob = {};
 
-                // Clear the form inputs
-                $('#sendVideo fieldset input').val('');
+                // Check for successful (blank) response
+                if (response.msg === '') {
 
-                alert("Thanks for using karaokegram!");
+                    // Clear cached data
+                    searchListData = [];
+                    videoBlob = {};
+
+                    // Clear the search
+                    $('#searchYouTube fieldset input').val('');
+
+                    // Clear the search results
+                    $('#resultList ul').empty();
+
+                    // Clear the you tube video
+                    $('#watchYouTube').empty();
+
+                    // Clear the form inputs
+                    $('#sendVideo fieldset input').val('');
+
+                    alert("Thanks for using karaokegram!");
+
+                    // Scroll page back up to step 1
+                    var target = $('#section-1');
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                }
+                else {
+                    // If something goes wrong, alert the error message that our service returned
+                    alert('Error: ' + response.msg);
+                }
             });
         }
         else {
@@ -162,25 +229,6 @@
             alert('Please fill in all fields');
             return false;
         }
-    }
-
-    // Show selected YouTube Video
-    function showVideo(event) {
-
-        // Prevent link from firing
-        event.preventDefault();
-
-        // Retrieve video id from the link rel attribute
-        var thisId = $(this).attr('rel');
-
-        // Create url for video with thisId
-        var url = "https://www.youtube.com/embed/" + thisId;
-
-        // Create iframe for video
-        var videoContent = '<iframe class="frameYouTube" scrolling="no" frameborder="no" src="' + url + '" ></iframe>';
-
-        // Inject the video content string into our exiting HTML div
-        $('#watchYouTube').html(videoContent);
     }
 
     function onMediaError(e) {
@@ -193,7 +241,7 @@
         webcamStream = stream;
 
         // Set video source to camera stream
-        var video = document.querySelector('video');
+        var video = document.querySelector('#section-3 video');
         video.controls = false;
         video.muted = true;
         video.src = window.URL.createObjectURL(stream);
@@ -202,32 +250,28 @@
     }
 
     function useMediaRecorder(stream) {
-        var video = document.querySelector('video');
 
-        //video.addEventListener('loadedmetadata', function() {
+        // Stick our recorder into the global object
+        mediaRecorder = new MediaRecorder(stream);
 
-            // Stick our recorder into the global object
-            mediaRecorder = new MediaRecorder(stream);
+        // Data is available once the mediaRecorder is stopped.
+        mediaRecorder.ondataavailable = function(event) {
+            console.log('ondataavailable', event.data.type, event.data.size, event.data);
 
-            // Data is available once the mediaRecorder is stopped.
-            mediaRecorder.ondataavailable = function(event) {
-                console.log('ondataavailable', event.data.type, event.data.size, event.data);
+            if (!event.data.size) {
+                console.warn('Recording of', event.data.type, 'failed.');
+                return;
+            }
 
-                if (!event.data.size) {
-                    console.warn('Recording of', event.data.type, 'failed.');
-                    return;
-                }
+            // Stick the video data into the global object
+            videoBlob = new window.Blob([event.data], {
+                // at this stage, Firefox MediaRecorder API doesn't allow to choose the output mimeType format!
+                // It specifies the container format as well as the audio and video capture formats.
+                type: event.data.type || self.mimeType || 'audio/ogg'
+            });
+        };
 
-                // Stick the video data into the global object
-                videoBlob = new window.Blob([event.data], {
-                    // at this stage, Firefox MediaRecorder API doesn't allow to choose the output mimeType format!
-                    // It specifies the container format as well as the audio and video capture formats.
-                    type: event.data.type || self.mimeType || 'audio/ogg'
-                });
-            };
-
-            mediaRecorder.start();
-        //}, false);
+        mediaRecorder.start();
     }
 
 })();

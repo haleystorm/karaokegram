@@ -25,14 +25,12 @@ var UPLOAD_DIR = config.get('Files.upload_dir')
 // Google youtube client
 var youtube = google.youtube('v3');
 
-// Upload api
-var upload = multer({ dest: UPLOAD_DIR });
-
 
 
 // Configure routes
 var routes = require('./routes/index');
 var searchYouTube = require('./routes/searchYouTube');
+var upload = require('./routes/upload.js');
 
 
 
@@ -62,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     req.API_KEY = API_KEY;
     req.youtube = youtube;
+    req.upload = multer({ dest: UPLOAD_DIR });
     next();
 });
 
@@ -69,14 +68,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/search', searchYouTube);
-app.post('/upload', upload.single('video.webm'), function (req, res, next) {
-    console.log(req.body);
-
-    console.log(req.file.originalname);
-    console.log(req.file.filename);
-
-    res.send({ msg:'Received ' + 1 + ' files' });
-});
+app.use('/upload', upload);
 
 
 

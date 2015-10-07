@@ -1,27 +1,32 @@
 extends layout
 
 block content
-    p 1. Find your song
-    #searchYouTube
-        fieldset
-            input#inputSearch(type='text', placeholder='Search...')
-            button#btn-do-search Search
-    #resultList
-        ul
+    #section-1.section
+        p 1. Find your song
+        #searchYouTube
+            fieldset
+                input#inputSearch(type='text', placeholder='Search...')
+                button#btn-do-search Search
+        #resultList
+            ul
     
-    #watchYouTube
+    #section-2.section
+        #watchYouTube
     
-    p 2. Press Record (time it right!)
-    video(autoplay, width='420px')
-    button#btn-start-recording Record
-    button#btn-stop-recording Stop
-    p 3. Share
-    #sendVideo
-        fieldset
-            input#inputUserName(type='text', placeholder='Your Name')
-            input#inputUserEmail(type='text', placeholder='Your Email')
-            br
-            input#inputFriendName(type='text', placeholder="Friend's Name")
-            input#inputFriendEmail(type='text', placeholder="Friend's Email")
-            br
-            button#btn-submit Send Video
+    #section-3.section
+        p 2. Press Record (time it right!)
+        video(autoplay, width='420px')
+        button#btn-start-recording Record
+        button#btn-stop-recording Stop
+
+    #section-4.section
+        p 3. Share
+        #sendVideo
+            fieldset
+                input#inputUserName(type='text', placeholder='Your Name')
+                input#inputUserEmail(type='text', placeholder='Your Email')
+                br
+                input#inputFriendName(type='text', placeholder="Friend's Name")
+                input#inputFriendEmail(type='text', placeholder="Friend's Email")
+                br
+                button#btn-submit Send Video
