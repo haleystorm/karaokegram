@@ -1,0 +1,13 @@
+{
+  // Unique YouTube API_KEY for karaokegram. Do not check in this file to git. Do not share. Super secret.
+  "YouTube": {
+    "api_key": "API KEY GOES HERE"
+  },
+  "Files": {
+    "upload_dir": "public/videos"
+  },
+  "Gmail": {
+    "address": "karaokegram4u@gmail.com",
+    "password": "PASSWORD GOES HERE"
+  }
+}

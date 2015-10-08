@@ -1,7 +1,7 @@
 # KARAOKEGRAM
 Send a performance to a long distance friend.
 
-Originally the brain child of N. Cooler and K. Wisniewski, 
+Originally the brain child of N. Cooler and K. Wisniewski,
 this collaborative app-in-progress hopes to bring silly song and danciness to our internet friends.
 
 Suggestions, tips and tricks are welcome.
@@ -13,27 +13,34 @@ More to come later.
 
 2. Install [Grunt](http://gruntjs.com/getting-started#installing-the-cli)
 
-4. Clone the karaokegram repository
+3. Clone the karaokegram repository
    ```sh
    $ git clone https://github.com/haleystorm/karaokegram.git
    ```
 
-5. Navigate to the karaokegram folder
+4. Navigate to the karaokegram folder
    ```sh
    $ cd karaokegram
    ```
 
-6. Install dependencies
+5. Install dependencies
    ```sh
    $ npm install
    ```
 
-7. Serve the presentation and monitor source files for changes
+6. Create config file
+   ```sh
+   $ cp config/default-example.json config/default.json
+   ```
+
+7.  Add api key and gmail password (ask haleystorm)
+
+8. Serve the presentation and monitor source files for changes
    ```sh
    $ grunt
    ```
 
-8. Open <http://localhost:3000>.
+9. Open <http://localhost:3000>.
 
 
 
