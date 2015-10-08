@@ -1,14 +1,21 @@
 # KARAOKEGRAM
 Send a performance to a long distance friend.
 
-Originally the brain child of N. Cooler and K. Wisniewski,
-this collaborative app-in-progress hopes to bring silly song and danciness to our internet friends.
+The brain child of N. Cooler and K. Wisniewski,
+this collaborative art-app-in-progress hopes to bring silly song and danciness to our internet friends.
 
-Suggestions, tips and tricks are welcome.
 
-More to come later.
+    Karaokegram's webcam recording is only supported by Firefox.
+
+
+Karaokegram runs on Node with Express, Jade, and Stylus. It uses the Google YouTube api to search for videos and does audio/video capture using ```navigator.getUserMedia()```. Read [Capturing Audio & Video in HTML5](http://www.html5rocks.com/en/tutorials/getusermedia/intro/#toc-resources) for more info.
+
+
+Suggestions and tips are welcome.
+
 
 ## Setup
+
 1. Install [Node.js](http://nodejs.org/)
 
 2. Install [Grunt](http://gruntjs.com/getting-started#installing-the-cli)
@@ -33,7 +40,7 @@ More to come later.
    $ cp config/default-example.json config/default.json
    ```
 
-7.  Add api key and gmail password (ask haleystorm)
+7. Add api key and gmail password to default.json
 
 8. Serve the presentation and monitor source files for changes
    ```sh
