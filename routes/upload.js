@@ -17,19 +17,23 @@ router.post('/', function(req, res) {
         } else {
             // Everything went fine
             var senderName = req.body.username;
-            //var senderEmail = req.body.email;
             var recipientName = req.body.friendname;
             var recipientEmail = req.body.friendemail;
 
-            // console.log(req.body);
-
-            // console.log(req.file.originalname);
-            // console.log(req.file.filename);
-
             var hostname = req.headers.host; // example: hostname = 'localhost:3000'
-            var videoUrl = hostname + "/videos/" + req.file.filename;
+            var videoUrl = "http://" + hostname + "/watch-video/" + req.file.filename;
 
-            console.log(videoUrl);
+            var htmlBody = '';
+            htmlBody+='Hello ' + recipientName + ',';
+            htmlBody+='</br>';
+            htmlBody+='<p>' + senderName + ' has sent you a karaokegram!</p>';
+            htmlBody+='</br>';
+            htmlBody+='<p>';
+            htmlBody+='Please click here to see your karaokegram ';
+            htmlBody+='<a href=' + videoUrl + '>';
+            htmlBody+=videoUrl;
+            htmlBody+='</a>';
+            htmlBody+='</p>';
 
             // setup e-mail data
             var mailOptions = {
@@ -37,6 +41,7 @@ router.post('/', function(req, res) {
                 to: recipientEmail, // receiver
                 subject: senderName + ' sent you a karaokegram', // Subject line
                 text: 'Please click the link to see your video: ' + videoUrl, // plaintext body
+                html: htmlBody  // html body
             };
 
             transporter.sendMail(mailOptions, function(error, info){

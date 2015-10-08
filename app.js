@@ -34,8 +34,6 @@ var gmailpass = config.get('Gmail.password');
 var youtube = google.youtube('v3');
 
 // Create smtp transporter for sending email
-console.log(gmailaddr);
-console.log(gmailpass);
 var transporter = nodemailer.createTransport(
     smtpTransport({
         service: 'gmail',

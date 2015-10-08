@@ -33,3 +33,7 @@ public/components
 
 # Config file
 default.json
+
+# video files
+!/public/videos/.empty
+/public/videos/*
