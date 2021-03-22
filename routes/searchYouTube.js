@@ -28,11 +28,11 @@ router.get('/', function(req, res) {
         } else {
             var result = [];
 
-            for(var i in response.items) {
-                var item = response.items[i];
+            for(var i in response.data.items) {
+                console.log(i);
+                var item = response.data.items[i];
                 result.push({id: item.id.videoId, title: item.snippet.title, description: item.snippet.description});
             }
-            
             res.json(result);
         }
     });

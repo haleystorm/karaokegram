@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var config = require('config');
 
 // Include Google api module - to access youtube search api
-var google = require('googleapis');
+var {google} = require('googleapis');
 
 // Include Multer api module - for saving uploaded video
 var multer  = require('multer');
@@ -59,7 +59,7 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));

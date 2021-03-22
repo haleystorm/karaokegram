@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         }
       },
       views: {
-        files: ['views/*.jade'],
+        files: ['views/*.pug'],
         options: {
           livereload: reloadPort
         }
