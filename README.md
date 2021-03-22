@@ -8,7 +8,7 @@ this collaborative art-app-in-progress hopes to bring silly song and danciness t
     Karaokegram's webcam recording is only supported by Firefox.
 
 
-Karaokegram runs on Node with Express, Jade, and Stylus. It uses the Google YouTube api to search for videos and does audio/video capture using ```navigator.getUserMedia()```. Read [Capturing Audio & Video in HTML5](http://www.html5rocks.com/en/tutorials/getusermedia/intro/#toc-resources) for more info.
+Karaokegram runs on Node with Express, Pug, and Stylus. It uses the Google YouTube api to search for videos and does audio/video capture using ```navigator.getUserMedia()```. Read [Capturing Audio & Video in HTML5](http://www.html5rocks.com/en/tutorials/getusermedia/intro/#toc-resources) for more info.
 
 
 Suggestions and tips are welcome.
