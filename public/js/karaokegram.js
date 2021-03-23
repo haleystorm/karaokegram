@@ -37,7 +37,6 @@
         if(navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ audio: true, video: true })
             .then(function(stream) {
-                /* use the stream */
                 // Stick our stream into the global object
                 webcamStream = stream;
 
@@ -50,7 +49,7 @@
                 video.play();
             })
             .catch(function(err) {
-                /* TODO handle the error */
+                // TODO handle the error
                 console.error('media error', err);
             });
         } else {
@@ -185,7 +184,6 @@
 
         // Check and make sure errorCount is still at zero
         if(errorCount === 0) {
-            console.log("sending data to server");
 
             var fd = new FormData();
             fd.append('username', $('#sendVideo fieldset input#inputUserName').val());
@@ -254,7 +252,6 @@
 
         // Data is available once the mediaRecorder is stopped.
         mediaRecorder.ondataavailable = function(event) {
-            console.log('ondataavailable', event.data.type, event.data.size, event.data);
 
             if (!event.data.size) {
                 console.warn('Recording of', event.data.type, 'failed.');
