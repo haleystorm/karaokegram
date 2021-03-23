@@ -2,11 +2,11 @@
 (function() {
 
     // Check browser. Needed for recording api.
-    var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox');
+    var is_firefox = navigator.userAgent.search('Firefox');
 
     // Search list data array for filling in results list
     var searchListData = [];
-    
+
     // Webcam stream for displaying in video html element
     var webcamStream = {};
     navigator.getUserMedia  = navigator.getUserMedia ||
@@ -22,9 +22,8 @@
 
     // DOM Ready ================================
     $(document).ready(function(){
-
         // Check if browser if firefox. Show alert if it isn't.
-        if(!is_firefox) {
+        if(is_firefox <= -1) {
             alert("Sorry, this site is only supported by Firefox.");
         }
 
@@ -35,8 +34,24 @@
         }, 1000);
 
         // Start streaming from the webcam
-        if(navigator.getUserMedia) {
-            navigator.getUserMedia({ audio: true, video: true }, onMediaSuccess, onMediaError);
+        if(navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+            .then(function(stream) {
+                // Stick our stream into the global object
+                webcamStream = stream;
+
+                // Set video source to camera stream
+                var video = document.querySelector('#section-3 video');
+                video.controls = false;
+                video.muted = true;
+                video.srcObject = stream;
+
+                video.play();
+            })
+            .catch(function(err) {
+                // TODO handle the error
+                console.error('media error', err);
+            });
         } else {
             alert('getUserMedia() is not supported in your browser');
         }
@@ -130,7 +145,7 @@
         $('#btn-start-recording').attr('disabled', true);
         $('#btn-stop-recording').removeAttr('disabled');
         $('#btn-submit').attr('disabled', true);
-        
+
         // Start recording from webcam
         // TODO check that webcamStream is active
         useMediaRecorder(webcamStream);
@@ -169,7 +184,6 @@
 
         // Check and make sure errorCount is still at zero
         if(errorCount === 0) {
-            console.log("sending data to server");
 
             var fd = new FormData();
             fd.append('username', $('#sendVideo fieldset input#inputUserName').val());
@@ -231,24 +245,6 @@
         }
     }
 
-    function onMediaError(e) {
-        console.error('media error', e);
-    }
-
-    function onMediaSuccess(stream) {
-
-        // Stick our stream into the global object
-        webcamStream = stream;
-
-        // Set video source to camera stream
-        var video = document.querySelector('#section-3 video');
-        video.controls = false;
-        video.muted = true;
-        video.src = window.URL.createObjectURL(stream);
-        
-        video.play();
-    }
-
     function useMediaRecorder(stream) {
 
         // Stick our recorder into the global object
@@ -256,7 +252,6 @@
 
         // Data is available once the mediaRecorder is stopped.
         mediaRecorder.ondataavailable = function(event) {
-            console.log('ondataavailable', event.data.type, event.data.size, event.data);
 
             if (!event.data.size) {
                 console.warn('Recording of', event.data.type, 'failed.');
